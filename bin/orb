@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-# -*- mode: ruby -*-
-
-line_num = `grep -n "pending" "#{ARGV[0]}"`.sub(/\:.*$/,'').to_i
-system "spec -r /Users/blibbey/bin/orb \"#{ARGV[0]}\" --line #{line_num}"  
-  
