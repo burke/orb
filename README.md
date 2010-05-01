@@ -12,6 +12,11 @@ the file and replacing the `ORB{}` call.
 
 [Watch the video](#) (Coming Soon).
 
+# I just want to use it with Rspec. How?
+
+Add `ORB{}` to a pending example, then run your spec suite with 
+`-r orb`, for example, `spec -rorb spec/**/*_spec.rb`, or add it to `spec_opts`.
+
 # Can I use this with \#{framework}?
 
 Probably. Have a look at `lib/orb/adapters/rspec.rb`. It's a pretty simple
