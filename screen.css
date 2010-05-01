@@ -1,9 +1,17 @@
+html {
+   background: url('orb.jpg') top center no-repeat;
+   background-position: 50% 100px;
+   margin: 0 auto;
+   height: 100%;
+}
 body {
    font-size: 36px;
    font-family: "Hoefler Text";
    color: #333;
    text-align: center;
    margin: 0 auto;
+   height: 100%;
+   background: -webkit-gradient(radial, 50% 300, 0, 50% 300, 400, from(rgba(255,255,240,0)), to(rgba(255,255,240,1.0)));
 }
 section {
    width: 600px;
@@ -15,7 +23,8 @@ h1 {
    line-height: 1.2em;
    font-size: 2.5em;
    text-align: right;
-   padding: 0;
+   padding-top: 1em;
+   margin: 0;
    margin-bottom: 0;
 }
 p {
@@ -35,11 +44,15 @@ p {
    color: #999;
    font-style: italic;
 }
-a {
+.smaller.left a {
    color: #000;
    text-decoration: none;
    background-color: #ffc;
 }
-a:hover, a:active {
+.smaller.left a:hover, .smaller.left a:active {
    border-bottom: 1px dotted black;
+}
+.smaller.right a {
+   color: #999;
+   text-decoration: none;
 }
