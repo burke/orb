@@ -11,7 +11,7 @@ body {
    text-align: center;
    margin: 0 auto;
    height: 100%;
-   background: -webkit-gradient(radial, 50% 300, 0, 50% 300, 400, from(rgba(255,255,240,0)), to(rgba(255,255,240,100%.0)));
+   background: -webkit-gradient(radial, 50% 300, 0, 50% 300, 400, from(rgba(255,255,240,0)), to(rgba(255,255,240,1.0)));
    background: -moz-radial-gradient(50% 300, 0, 50% 300, 400, from(rgba(255,255,240,0)), to(rgba(255,255,240,1.0)));
 }
 #section {
@@ -26,14 +26,17 @@ h1 {
    text-align: right;
    padding-top: 1em;
    margin: 0;
+   text-shadow: 1px 1px 8px #999;
    margin-bottom: 0;
 }
 p {
    margin-top: 0;
+   text-shadow: 0 0 3px #999;
    text-align: justify;
 }
 .smaller {
    font-size: 0.5em;
+   text-shadow: none;
 }
 .right { 
    float: right;
