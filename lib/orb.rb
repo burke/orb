@@ -18,7 +18,6 @@ module ORB
         puts buf
         next 
       when "q"
-        __orb_original_pending(message)
         break
       when "s"
         line, file = bind.eval("[__LINE__, __FILE__]")
