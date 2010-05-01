@@ -14,7 +14,7 @@ the file and replacing the `ORB{}` call.
 
 # Can I use this with \#{framework}?
 
-Probably. Have a look at `lib/adapters/rspec.rb`. It's a pretty simple
+Probably. Have a look at `lib/orb/adapters/rspec.rb`. It's a pretty simple
 format. 
 
 # Why do I have to call ORB with an empty block?
