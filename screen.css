@@ -11,9 +11,10 @@ body {
    text-align: center;
    margin: 0 auto;
    height: 100%;
-   background: -webkit-gradient(radial, 50% 300, 0, 50% 300, 400, from(rgba(255,255,240,0)), to(rgba(255,255,240,1.0)));
+   background: -webkit-gradient(radial, 50% 300, 0, 50% 300, 400, from(rgba(255,255,240,0)), to(rgba(255,255,240,100%.0)));
+   background: -moz-radial-gradient(50% 300, 0, 50% 300, 400, from(rgba(255,255,240,0)), to(rgba(255,255,240,1.0)));
 }
-section {
+#section {
    width: 600px;
    text-align: left;
    margin: 0 auto;
