@@ -2,9 +2,9 @@ def Binding.of_caller(&block)
   old_critical, Thread.critical = Thread.critical, true
   count = 0
   cc = nil
-  result, error = callcc{|c|cc=c}
+  result, error = callcc{|c|cc=c;nil}
   error.call if error
-  
+
   tracer = lambda do |*args|
     type, _, _, _, context = args
     if ["return", "c-return"].include?(type)

@@ -1,51 +1,43 @@
 require 'readline'
-
-# TODO: load rspec or something.
-
-module Spec
-  module Example
-    module Pending
-      # alias __orb_original_pending pending
-      def pending(message = "TODO")
-        Binding.of_caller do |b|
-          buf, line, last = [], "", ""
-          
-          while line = Readline.readline("ORB >> ", true)
-            
-            case line
-            when "a"
-              buf << last
-              next
-            when "p"
-              puts buf
-              next 
-            when "q"
-              __orb_original_pending(message)
-              break
-            when "s"
-              line, file = bind.eval("[__LINE__, __FILE__]")
-              ORB.write_buf_to_file(buf, line, file)
-              break
-            else 
-              begin
-                ctx = bind.eval("self")
-                ret = ctx.send(:eval, line, ctx.send(:binding))
-              rescue => e
-                puts e.message
-              else 
-                puts ret.inspect
-              end 
-            end 
-            
-            last = line
-          end 
-        end       
-      end 
-    end 
-  end 
-end 
+require 'orb/adapters/rspec'
 
 module ORB
+  
+  def self.capture(bind)
+    buf, line, last = [], "", ""
+
+    puts ORB::Adapter.header(bind)
+    
+    while line = Readline.readline("ORB >> ", true)
+      
+      case line
+      when "a"
+        buf << last
+        next
+      when "p"
+        puts buf
+        next 
+      when "q"
+        __orb_original_pending(message)
+        break
+      when "s"
+        line, file = bind.eval("[__LINE__, __FILE__]")
+        ORB.write_buf_to_file(buf, line, file)
+        break
+      else 
+        begin
+          this = bind.eval("self")
+          ret = this.send(:eval, line, this.send(:binding))
+        rescue => e
+          puts e.message
+        else 
+          puts ret.inspect
+        end 
+      end 
+      
+      last = line
+    end 
+  end 
 
   def self.write_buf_to_file(buf, line_num, file)
     lines = File.read(file).lines.to_a
