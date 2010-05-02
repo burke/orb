@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>rspec.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <style>
+    body {
+      font-family: 'Palatino Linotype', 'Hoefler Text', 'Book Antiqua', Palatino, FreeSerif, serif;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-weight: normal;
+    }
+ </style>
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+        <a class="source" href="orb.html">orb.rb</a>
+        <a class="source" href="rspec.html">rspec.rb</a>
+        </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>rspec.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-1">#</a>
+        </div>
+        <h2>ORB RSpec Adapter</h2>
+
+<p> This integrates ORB with RSpec. To run your test suite with ORB enabled,
+ run <code>spec</code> with <code>-rorb</code>, or add <code>-rorb</code> to <code>spec_opts</code>, or simply
+ <code>require 'orb'</code> in your <code>spec_helper.rb</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-2">#</a>
+        </div>
+        <p> ORB&rsquo;s requirements of an adapter are minimal:</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-3">#</a>
+        </div>
+        <ul>
+<li>(optional) Some convenient way to start an ORB session.</li>
+<li>(optional) A header describing this specific instance.
+Each RSpec example has a description that&rsquo;s printed when it fails.
+We re-create that here to provide context when an ORB session is started.</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">ORB</span>
+  <span class="k">module</span> <span class="nn">Adapters</span>
+    <span class="k">module</span> <span class="nn">RSpec</span>
+      <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">header</span><span class="p">(</span><span class="n">bind</span><span class="p">)</span>
+        <span class="n">this</span> <span class="o">=</span> <span class="n">bind</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;self&quot;</span><span class="p">)</span>
+        <span class="n">ancestry</span> <span class="o">=</span> <span class="o">[</span><span class="n">this</span><span class="o">.</span><span class="n">class</span><span class="p">,</span> <span class="n">this</span><span class="o">]</span>
+        <span class="n">ancestry</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:description</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+      <span class="k">end</span> 
+    <span class="k">end</span> 
+  <span class="k">end</span> 
+<span class="k">end</span> </pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-4">#</a>
+        </div>
+        <p> Initially, I wanted to override <code>pending</code> as the method to start ORB,
+ but as it turns out, the Object hackery I need to do to make ORB work
+ requires a block. Requiring that pending be called with a block seems like
+ an odd design choice, so instead I&rsquo;ve made the method ORB,
+ called like <code>ORB{}</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">module</span> <span class="nn">Spec</span>
+  <span class="k">module</span> <span class="nn">Example</span>
+    <span class="k">module</span> <span class="nn">Pending</span>
+      <span class="k">def</span> <span class="nf">ORB</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+        <span class="no">ORB</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">block</span><span class="o">.</span><span class="n">binding</span><span class="p">)</span>
+      <span class="k">end</span> 
+    <span class="k">end</span> 
+  <span class="k">end</span> 
+<span class="k">end</span> </pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-5">#</a>
+        </div>
+        <p> Finally, now that the RSpec Adapter is defined, set ORB&rsquo;s default Adapter.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">ORB</span><span class="o">::</span><span class="no">Adapter</span> <span class="o">=</span> <span class="no">ORB</span><span class="o">::</span><span class="no">Adapters</span><span class="o">::</span><span class="no">RSpec</span></pre></div>
+      </td>
+    </tr>
+    </table>
+</div>
+</body>
