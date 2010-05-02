@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name    = 'orb'
-  gem.version = "0.0.5"
+  gem.version = "0.0.6"
 
   gem.author, gem.email = 'Burke Libbey', "burke@burkelibbey.org"
 
