@@ -77,8 +77,8 @@ class ORB
       else 
         @hist << [line,false]
         begin
-          this = bind.eval("self")
-          ret = this.send(:eval, line, this.send(:binding))
+          this = @binding.eval("self")
+          ret = this.send(:eval, line, @binding)
         rescue => e
           puts e.message
         else 
@@ -96,6 +96,7 @@ class ORB
   # to ORB, where we should insert our code when the test is written out.
   def initialize(bind)
     @@index += 1
+    @binding = bind
     @buf, @hist = [], []
     @line, @file = bind.eval("[__LINE__, __FILE__]")
 
