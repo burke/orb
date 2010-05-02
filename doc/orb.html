@@ -126,23 +126,33 @@
   <span class="vc">@@index</span><span class="o">=</span><span class="mi">0</span>
   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">bind</span><span class="p">)</span>
     <span class="vc">@@index</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="vi">@buf</span><span class="p">,</span> <span class="vi">@hist</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="o">[]</span><span class="p">,</span> <span class="o">[]</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+    <span class="vi">@buf</span><span class="p">,</span> <span class="vi">@hist</span> <span class="o">=</span> <span class="o">[]</span><span class="p">,</span> <span class="o">[]</span>
     <span class="vi">@line</span><span class="p">,</span> <span class="vi">@file</span> <span class="o">=</span> <span class="n">bind</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;[__LINE__, __FILE__]&quot;</span><span class="p">)</span>
 
     <span class="nb">puts</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">[[ </span><span class="si">#{</span><span class="no">ORB</span><span class="o">::</span><span class="no">Adapter</span><span class="o">.</span><span class="n">header</span><span class="p">(</span><span class="n">bind</span><span class="p">)</span><span class="si">}</span><span class="s2"> ]]&quot;</span>
     
     <span class="k">while</span> <span class="n">line</span> <span class="o">=</span> <span class="no">Readline</span><span class="o">.</span><span class="n">readline</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
       <span class="k">case</span> <span class="n">line</span>
-      <span class="k">when</span><span class="sr"> /^a\s?(\d*)$/</span>
-        <span class="vi">@hist</span><span class="o">.</span><span class="n">last</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="kp">true</span>
-        <span class="vi">@buf</span> <span class="o">&lt;&lt;</span> <span class="n">last</span>
-        <span class="k">next</span></pre></div>
+        </pre></div>
       </td>
     </tr>
     <tr id='section-8'>
       <td class=docs>
         <div class="octowrap">
           <a class="octothorpe" href="#section-8">#</a>
+        </div>
+        <p> The <code>a</code> command appends one or more recent lines to the test buffer.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="k">when</span><span class="sr"> /^a\s?(\d*)$/</span>
+        <span class="n">append_to_buffer</span><span class="p">(</span><span class="vg">$1</span><span class="o">.</span><span class="n">to_i</span><span class="p">)</span>
+        <span class="k">next</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-9">#</a>
         </div>
         <p> The <code>h</code> command shows this session&rsquo;s history. Each line starts with
  a coloured space. A red space indicates that this line is not in
@@ -161,10 +171,10 @@
         <span class="k">next</span> </pre></div>
       </td>
     </tr>
-    <tr id='section-9'>
+    <tr id='section-10'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-9">#</a>
+          <a class="octothorpe" href="#section-10">#</a>
         </div>
         <p> The <code>p</code> command prints the current contents of the buffer. If the test
  is written back to the file right now, this is what will be inserted.</p>
@@ -176,10 +186,10 @@
         </pre></div>
       </td>
     </tr>
-    <tr id='section-10'>
+    <tr id='section-11'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-10">#</a>
+          <a class="octothorpe" href="#section-11">#</a>
         </div>
         <p> The <code>q</code> command exits this session without writing a test. Next time
  the suite is run, you&rsquo;ll get a REPL here again.</p>
@@ -190,10 +200,10 @@
         </pre></div>
       </td>
     </tr>
-    <tr id='section-11'>
+    <tr id='section-12'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-11">#</a>
+          <a class="octothorpe" href="#section-12">#</a>
         </div>
         <p> The <code>s</code> command writes the contents of the buffer out to the file.</p>
       </td>
@@ -204,10 +214,10 @@
         </pre></div>
       </td>
     </tr>
-    <tr id='section-12'>
+    <tr id='section-13'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-12">#</a>
+          <a class="octothorpe" href="#section-13">#</a>
         </div>
         <p> If this line wasn&rsquo;t a command, evaluate it in the context of the code
  that called <code>ORB{}</code>. We&rsquo;re stealing that context from the block.
@@ -227,18 +237,33 @@
         <span class="k">end</span> 
       <span class="k">end</span> 
       
-      <span class="n">last</span> <span class="o">=</span> <span class="n">line</span>
     <span class="k">end</span> 
   <span class="k">end</span> 
 
-  <span class="kp">private</span>
+  <span class="kp">private</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-14">#</a>
+        </div>
+        <p> Append some number of recent lines to the test buffer. This is triggered
+ by the command <code>a</code> or <code>a &lt;n&gt;</code>, eg. <code>a 3</code>. If called with no number, just
+ appends the last command run, otherwise, appends n lines.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">append_to_buffer</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="vi">@hist</span><span class="o">.</span><span class="n">last</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="kp">true</span>
+    <span class="vi">@buf</span> <span class="o">&lt;&lt;</span> <span class="vi">@hist</span><span class="o">.</span><span class="n">last</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+  <span class="k">end</span> 
   </pre></div>
       </td>
     </tr>
-    <tr id='section-13'>
+    <tr id='section-15'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-13">#</a>
+          <a class="octothorpe" href="#section-15">#</a>
         </div>
         <p> When this command is run, ORB will save the contents of the test buffer
  back into the file where <code>ORB{}</code> was called from. It does this by reading
@@ -255,10 +280,10 @@
       <span class="n">indentation</span> <span class="o">=</span> <span class="n">orbline</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="sr">/[^\s]/</span><span class="p">)</span></pre></div>
       </td>
     </tr>
-    <tr id='section-14'>
+    <tr id='section-16'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-14">#</a>
+          <a class="octothorpe" href="#section-16">#</a>
         </div>
         <p> Here we&rsquo;re indenting the inserted code to the same level as <code>ORB{}</code>
  was indented.</p>
@@ -275,10 +300,10 @@
   </pre></div>
       </td>
     </tr>
-    <tr id='section-15'>
+    <tr id='section-17'>
       <td class=docs>
         <div class="octowrap">
-          <a class="octothorpe" href="#section-15">#</a>
+          <a class="octothorpe" href="#section-17">#</a>
         </div>
         <p> ORB&rsquo;s prompt looks like <code>1:0 &gt;&gt;</code>. The first number is the index of this
  test, starting at one, and incrementing with each test during an
