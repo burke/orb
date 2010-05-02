@@ -29,16 +29,17 @@ class ORB
   @@index=0
   def initialize(bind)
     @@index += 1
-    @buf, @hist, last = [], [], ""
+    @buf, @hist = [], []
     @line, @file = bind.eval("[__LINE__, __FILE__]")
 
     puts "\n\n[[ #{ORB::Adapter.header(bind)} ]]"
     
     while line = Readline.readline(prompt, true)
       case line
+        
+        # The `a` command appends one or more recent lines to the test buffer.
       when /^a\s?(\d*)$/
-        @hist.last[1] = true
-        @buf << last
+        append_to_buffer($1.to_i)
         next
 
         # The `h` command shows this session's history. Each line starts with 
@@ -68,7 +69,7 @@ class ORB
         
         # The `s` command writes the contents of the buffer out to the file.
       when "s"
-        ORB.write_buf_to_file
+        write_buf_to_file
         break
         
         # If this line wasn't a command, evaluate it in the context of the code 
@@ -87,11 +88,18 @@ class ORB
         end 
       end 
       
-      last = line
     end 
   end 
 
   private
+
+  # Append some number of recent lines to the test buffer. This is triggered
+  # by the command `a` or `a <n>`, eg. `a 3`. If called with no number, just
+  # appends the last command run, otherwise, appends n lines.
+  def append_to_buffer(n=1)
+    @hist.last[1] = true
+    @buf << @hist.last[0]
+  end 
   
   # When this command is run, ORB will save the contents of the test buffer
   # back into the file where `ORB{}` was called from. It does this by reading
