@@ -9,7 +9,7 @@
 # The basic workflow with ORB is: 
 
 # 1. Add `ORB{}` to each new test, at the point where you'd like to insert code.
-# 2. Run your test suite with `orb` loaded.
+# 2. Run your test suite with `orb` loaded. See `adapters/rspec.rb`.
 # 3. Use the REPL provided for each call to ORB to create a new test.
 
 # When a call to `ORB` is encountered, you'll be dropped to to a REPL with full

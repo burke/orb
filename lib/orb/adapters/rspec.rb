@@ -1,5 +1,9 @@
 ### ORB RSpec Adapter
-# This integrates ORB with RSpec. ORB's requirements of an adapter are minimal:
+# This integrates ORB with RSpec. To run your test suite with ORB enabled,
+# run `spec` with `-rorb`, or add `-rorb` to `spec_opts`, or simply 
+# `require 'orb'` in your `spec_helper.rb`.
+
+# ORB's requirements of an adapter are minimal:
 
 # - (optional) Some convenient way to start an ORB session. 
 # - (optional) A header describing this specific instance.
