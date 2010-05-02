@@ -235,8 +235,8 @@
         <div class='highlight'><pre>      <span class="k">else</span> 
         <span class="vi">@hist</span> <span class="o">&lt;&lt;</span> <span class="o">[</span><span class="n">line</span><span class="p">,</span><span class="kp">false</span><span class="o">]</span>
         <span class="k">begin</span>
-          <span class="n">this</span> <span class="o">=</span> <span class="n">bind</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;self&quot;</span><span class="p">)</span>
-          <span class="n">ret</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:eval</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">this</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:binding</span><span class="p">))</span>
+          <span class="n">this</span> <span class="o">=</span> <span class="vi">@binding</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;self&quot;</span><span class="p">)</span>
+          <span class="n">ret</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:eval</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="vi">@binding</span><span class="p">)</span>
         <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
           <span class="nb">puts</span> <span class="n">e</span><span class="o">.</span><span class="n">message</span>
         <span class="k">else</span> 
@@ -263,6 +263,7 @@
       <td class=code>
         <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">bind</span><span class="p">)</span>
     <span class="vc">@@index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="vi">@binding</span> <span class="o">=</span> <span class="n">bind</span>
     <span class="vi">@buf</span><span class="p">,</span> <span class="vi">@hist</span> <span class="o">=</span> <span class="o">[]</span><span class="p">,</span> <span class="o">[]</span>
     <span class="vi">@line</span><span class="p">,</span> <span class="vi">@file</span> <span class="o">=</span> <span class="n">bind</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="s2">&quot;[__LINE__, __FILE__]&quot;</span><span class="p">)</span></pre></div>
       </td>
