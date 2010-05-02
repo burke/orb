@@ -27,13 +27,11 @@ require 'orb/adapters/rspec'
 
 class ORB
   @@index=0
-  def initialize(bind)
-    @@index += 1
-    @buf, @hist = [], []
-    @line, @file = bind.eval("[__LINE__, __FILE__]")
-
-    puts "\n\n[[ #{ORB::Adapter.header(bind)} ]]"
-    
+  
+  # Once ORB is called, the user is presented with a minimal IRB-like REPL,
+  # where they can evaluate arbitrary ruby code or execute a set of built-in
+  # commands to build up a test and save it back to the test file. 
+  def orb_it_up
     while line = Readline.readline(prompt, true)
       case line
         
@@ -89,6 +87,25 @@ class ORB
       end 
       
     end 
+  end   
+  
+  # It's up to the adapters to figure out the context we need to evaluate code
+  # in. Typically, they'll grab it from an empty block. Adapters call this 
+  # intializer with a `Binding`, and we set a few instance variables for the 
+  # REPL to use. Notably, `@line` and `@file` are the location of the call
+  # to ORB, where we should insert our code when the test is written out.
+  def initialize(bind)
+    @@index += 1
+    @buf, @hist = [], []
+    @line, @file = bind.eval("[__LINE__, __FILE__]")
+
+    # This is normally used for the test's description. It's not a strict 
+    # requirement of an adapter, but will be set and shown if present.
+    @header = ORB::Adapter.header(bind) if ORB::Adapter.respond_to?(:header)
+    puts "\n\n[[ #{@header} ]]" if @header
+    
+    # Gentlemen, start your REPLs.
+    orb_it_up
   end 
 
   private
