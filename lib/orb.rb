@@ -1,4 +1,4 @@
-# ORB is a tool to write tests interactively. 
+### ORB is a tool to write tests interactively. 
 
 # Most ruby programmers, even the ones with extensive test suites, frequently 
 # find themselves in IRB, trying snippets of code here and there.
@@ -7,22 +7,22 @@
 # process. 
 
 # The basic workflow with ORB is: 
-
+# 
 # 1. Add `ORB{}` to each new test, at the point where you'd like to insert code.
 # 2. Run your test suite with `orb` loaded. See `adapters/rspec.rb`.
 # 3. Use the REPL provided for each call to ORB to create a new test.
 
 # When a call to `ORB` is encountered, you'll be dropped to to a REPL with full
-# access to the test's context (much like a debugger). You can run code, and 
+# access to the test's context (much like in a debugger). You can run code, and
 # interact with the context however you like. When you're ready to write your 
 # test, you simply run the commands, then add them to a buffer. Once your 
 # buffer contains the code you'd like to save as a test, you can write
 # it back to the file in place of the call to `ORB` with just two keystrokes.
 
-# The REPL uses readline for line editing.
+# By default, the RSpec Adapter is loaded. Loading any other adapter later 
+# will override this choice. Adapters are very simple to write. If your test
+# framework isn't supported, have a look at `rspec.rb`.
 require 'readline'
-
-# Adapters are near-trivial to write, and provide test-framework integration.
 require 'orb/adapters/rspec'
 
 class ORB
@@ -34,6 +34,8 @@ class ORB
   def orb_it_up
     while line = Readline.readline(prompt, true)
       case line
+        
+        ### Commands
         
         # The `a` command appends one or more recent lines to the test buffer.
       when /^a\s?(\d*)$/
@@ -88,6 +90,8 @@ class ORB
       
     end 
   end   
+
+  ### Boring Implementation Details
   
   # It's up to the adapters to figure out the context we need to evaluate code
   # in. Typically, they'll grab it from an empty block. Adapters call this 
